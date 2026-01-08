@@ -7,13 +7,13 @@ public class World : MonoBehaviour
 {
     public int mapSizeInChunks = 6;
     public int chunkSize = 16, chunkHeight = 100;
-    public int waterThreshold = 50;
-    public float noiseScale = 0.03f;
     public GameObject chunkPrefab;
 
     Dictionary<Vector3Int, ChunkData> chunkDataDictionary = new Dictionary<Vector3Int, ChunkData>();
     Dictionary<Vector3Int, ChunkRenderer> chunkDictionary = new Dictionary<Vector3Int, ChunkRenderer>();
 
+    public TerrainGenerator terrarianGenerator;
+    public Vector2Int mapSeedOffset;
     public void GenerateWorld()
     {
         chunkDataDictionary.Clear();
@@ -29,8 +29,8 @@ public class World : MonoBehaviour
             {
 
                 ChunkData data = new ChunkData(chunkSize, chunkHeight, this, new Vector3Int(x * chunkSize, 0, z * chunkSize));
-                GenerateVoxels(data);
-                chunkDataDictionary.Add(data.worldPosition, data);
+                ChunkData newData = terrarianGenerator.GenerateChunkData(data, mapSeedOffset);
+                chunkDataDictionary.Add(newData.worldPosition, newData);
             }
         }
 
@@ -42,41 +42,6 @@ public class World : MonoBehaviour
             chunkDictionary.Add(data.worldPosition, chunkRenderer);
             chunkRenderer.InitializeChunk(data);
             chunkRenderer.UpdateChunk(meshData);
-
-        }
-    }
-
-        private void GenerateVoxels(ChunkData data)
-    {
-        for (int x = 0; x < data.chunkSize; x++)
-        {
-            for (int z = 0; z < data.chunkSize; z++)
-            {
-                float noiseValue = Mathf.PerlinNoise((data.worldPosition.x + x) * noiseScale, (data.worldPosition.z + z) * noiseScale);
-                int groundPosition = Mathf.RoundToInt(noiseValue * chunkHeight);
-                for (int y = 0; y < chunkHeight; y++)
-                {
-                    BlockType voxelType = BlockType.Dirt;
-                    if (y > groundPosition)
-                    {
-                        if (y < waterThreshold)
-                        {
-                            voxelType = BlockType.Water;
-                        }
-                        else
-                        {
-                            voxelType = BlockType.Air;
-                        }
-
-                    }
-                    else if (y == groundPosition)
-                    {
-                        voxelType = BlockType.Grass_Dirt;
-                    }
-
-                    Chunk.SetBlock(data, new Vector3Int(x, y, z), voxelType);
-                }
-            }
         }
     }
 
