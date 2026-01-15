@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class BiomeGenerator : MonoBehaviour
 {
+    public bool useDomainWarping = true;
+
+    public DomainWarping domainWarping;
     public NoiseSettings biomeNoiseSettings;
     public BlockLayerHandler startLayerHandler;
     public List<BlockLayerHandler> additionalLayerHandlers;
@@ -24,7 +27,16 @@ public class BiomeGenerator : MonoBehaviour
 
     private int GetSurfaceHeightNoice(int x, int z, int chunkHeight)
     {
-        float terrainHeight = GameNoice.OctavePerlin(x, z, biomeNoiseSettings);
+        float terrainHeight;
+
+        if(useDomainWarping)
+        {
+            terrainHeight = domainWarping.GenerateDomainNoise(x, z, biomeNoiseSettings);
+        } else
+        {
+            terrainHeight = GameNoice.OctavePerlin(x, z, biomeNoiseSettings);
+        }
+
         terrainHeight = GameNoice.Redistribution(terrainHeight, biomeNoiseSettings);
         int surfaceHeight = GameNoice.RemapValue01ToInt(terrainHeight, 0, chunkHeight);
         return surfaceHeight;

@@ -151,6 +151,7 @@ MonoBehaviour:
   Next: {fileID: 0}
   stoneThreshold: 0.5
   stoneNoiseSettings: {fileID: 11400000, guid: 1a9664268854c1f48b5c1723f6e58bbc, type: 2}
+  domainWarping: {fileID: 1046465310}
 --- !u!4 &17531833
 Transform:
   m_ObjectHideFlags: 0
@@ -704,6 +705,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1046465309}
   - component: {fileID: 1046465308}
+  - component: {fileID: 1046465310}
   m_Layer: 0
   m_Name: BiomeGenerator
   m_TagString: Untagged
@@ -723,6 +725,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f093299bdfd5f4f9aeb07253f1c429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BiomeGenerator
+  useDomainWarping: 1
+  domainWarping: {fileID: 1046465310}
   biomeNoiseSettings: {fileID: 11400000, guid: ffe2b12dee5471b479127fd521aeca5e, type: 2}
   startLayerHandler: {fileID: 1669067423}
   additionalLayerHandlers:
@@ -747,6 +751,22 @@ Transform:
   - {fileID: 140331467}
   m_Father: {fileID: 1375087780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1046465310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1046465307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f82f8c46f43c6043b5a71ef0abf773f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DomainWarping
+  noiseDomainX: {fileID: 11400000, guid: 87cdfef927d73a64198557a675e9baa3, type: 2}
+  noiseDomainY: {fileID: 11400000, guid: d34b4a4dfd3bd9d4d86f7717b5b9d884, type: 2}
+  amplitudeX: 80
+  amplitudeY: 80
 --- !u!1 &1351005782
 GameObject:
   m_ObjectHideFlags: 0
