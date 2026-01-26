@@ -27,7 +27,7 @@ public class StoneLayerHandler : BlockLayerHandler
 
         if (stoneNoise > stoneThreshold)
         {
-            for (int i = chunkData.worldPosition.y; i <= endPosition; i++)
+            for (int i = chunkData.worldPosition.y ; i <= endPosition; i++)
             {
                 Vector3Int pos = new Vector3Int(x, i, z);
                 Chunk.SetBlock(chunkData, pos, BlockType.Stone);

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class World : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class World : MonoBehaviour
 
     public TerrainGenerator terrarianGenerator;
     public Vector2Int mapSeedOffset;
+
+    public UnityEvent OnWorldCreated, OnNewChunksGenerated;
     public void GenerateWorld()
     {
         chunkDataDictionary.Clear();
@@ -43,6 +46,7 @@ public class World : MonoBehaviour
             chunkRenderer.InitializeChunk(data);
             chunkRenderer.UpdateChunk(meshData);
         }
+        OnWorldCreated?.Invoke();
     }
 
     internal BlockType GetBlockFromChunkCoordinates(ChunkData chunkData, int x, int y, int z)
@@ -56,5 +60,11 @@ public class World : MonoBehaviour
             return BlockType.Nothing;
         Vector3Int blockInCHunkCoordinates = Chunk.GetBlockInChunkCoordinates(containerChunk, new Vector3Int(x, y, z));
         return Chunk.GetBlockFromChunkCoordinates(containerChunk, blockInCHunkCoordinates);
+    }
+
+    internal void LoadAdditionalChunksRequest(GameObject player)
+    {
+        Debug.Log("Load more chunks");
+        OnNewChunksGenerated?.Invoke();
     }
 }
