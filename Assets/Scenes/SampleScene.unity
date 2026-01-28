@@ -583,9 +583,10 @@ MonoBehaviour:
   mapSizeInChunks: 10
   chunkSize: 16
   chunkHeight: 100
+  chunkDrawingRange: 10
   chunkPrefab: {fileID: 678141761515529410, guid: b4d0a37b31660434e8260b7d96d4186d, type: 3}
-  terrarianGenerator: {fileID: 1375087779}
   mapSeedOffset: {x: 0, y: 0}
+  terrainGenerator: {fileID: 1375087779}
   OnWorldCreated:
     m_PersistentCalls:
       m_Calls:

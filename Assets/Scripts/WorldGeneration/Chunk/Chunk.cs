@@ -64,7 +64,7 @@ public static class Chunk
         }
         else
         {
-            throw new Exception("Need to ask World for appropiate chunk");
+            WorldDataHelper.SetBlock(chunkData.worldReference, localPosition, block);
         }
     }
 
